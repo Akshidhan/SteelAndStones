@@ -1,0 +1,24 @@
+.navcolor{
+    background-color: rgba(140, 141, 84, 0.26);
+}
+
+.bcolor{
+    color: black;
+}
+
+.search{
+    border-radius: 100px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.searchInput, .navIcon{
+    border: none;
+    background-color: rgba(140, 141, 84, 0);
+}
+
+.searchInput:focus{
+    outline: none;
+}
