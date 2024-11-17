@@ -105,7 +105,7 @@
 }
 
 .btn-addToCart:hover{
-
+    background: rgba(184, 210, 179, 0.577);
 }
 
 .extraPic{
@@ -180,4 +180,80 @@ a{
         justify-content: center;
         align-items: center;
     }
+}
+
+.heading32600{
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 48px;
+    text-decoration-skip-ink: none;
+}
+
+.btn-login{
+    text-align: center;
+    background: rgba(0, 0, 0, 1);
+    color: white;
+    border: 1 solid rgba(0, 0, 0, 0);
+    width: 100%;
+    border-radius: 100px;
+}
+
+.link{
+    text-align: right;
+    width: 100%;
+    color: rgba(36, 103, 234, 1);font-family: Poppins;
+}
+
+#forgot{
+    font-style: italic;
+    font-weight: 600;
+    text-align: right;
+}
+
+.px12{
+    font-size: 12px;
+}
+
+#text{
+    color: rgba(196, 196, 196, 1);
+    font-family: Poppins;
+    font-size: 10px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.form-input{
+    border-radius: 0;
+    border-width: 0 0 1px 0;
+    margin-bottom: 1rem;
+}
+
+.line{
+    height: 1px;
+    background-color: rgba(196, 196, 196, 1);
+}
+
+#passwordHints{
+    margin: 0 0 1rem 1rem;
+    display: none;
+}
+
+#passwordHints *{
+    padding: 0;
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+#passwordHint .ok{
+    color: green;
+}
+
+#passwordHint .nok{
+    color: red;
+}
+
+.alert{
+    position: absolute;
+    bottom: 0;
+    left: 10px;
 }
