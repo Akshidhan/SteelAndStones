@@ -1,12 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var fname = document.getElementById('fname');
     var username = document.getElementById('username');
+    var email = document.getElementById('email');
     var form = document.getElementById('signUpForm');
     var numOfChar = document.getElementById('numOfChar');
     var num = document.getElementById('num');
     var ucase = document.getElementById('ucase');
     var lcase = document.getElementById('lcase');
     var passwordHints = document.getElementById('passwordHints');
+    var password = document.getElementById('password');
+    var submitBtn = document.getElementById('submitBtn');
+    var confirmPass = document.getElementById('confirmpass');
 
     const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
     const appendAlert = (message, type) => {
@@ -81,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function checkBlank(){
-        if(fname.value === "" || username.value === "" || password.value === ""){
+        if(email.value === "" || username.value === "" || password.value === "" || confirmPass === ""){
             appendAlert('Please fill in all the fields!', 'secondary');
             return false;
         }
@@ -90,16 +93,27 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
+    function confirmPasswords(){
+        if (password.value === confirmPass.value){
+            return true;
+        } else {
+            appendAlert('Please check your passwords', 'secodary');
+            return false;
+        }
+    }
 
+    submitBtn.addEventListener('click', function (event) {
+        event.preventDefault();
+        debugger;
+    
         const areFieldsNotBlank = checkBlank();
         if (areFieldsNotBlank) {
             const isPasswordValid = checkPass();
-
             if (isPasswordValid) {
-                console.log(form);
-                form.submit();
+                const arePasswordsMatching = confirmPasswords();
+                if (arePasswordsMatching) {
+                    HTMLFormElement.prototype.submit.call(form);
+                }
             }
         }
     });
