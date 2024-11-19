@@ -50,10 +50,46 @@
                     <div class="line col-3"></div>
                 </div>
                 <?php
+                    require_once 'config.php';
+                    include 'connect.php';
+
                     if(isset($_SESSION['userID'])){
-                        header("Location: index.php");
-                    } else { 
-                        echo "<a href='".$client->createAuthUrl()."'><img src='files/google.png' alt='' class='socialIcon'></a>";
+                        header("Location: index.html");
+                    } else {
+                        if(isset($_GET['code'])){
+                            $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+                            $client->setAccessToken($token['access_token']);
+    
+                            $google_oauth = new Google_Service_Oauth2($client);
+                            $google_account_info = $google_oauth->userinfo->get();
+                            $userinfo = [
+                                'email' => $google_account_info['email'],
+                                'full_name' => $google_account_info['name'],
+                                'picture' => $google_account_info['picture'],
+                                'token' => $google_account_info['id'],
+                            ];
+    
+                            $sql = "SELECT * FROM users WHERE email ='{$userinfo['email']}'";
+                            $result = mysqli_query($conn, $sql);
+                            if (mysqli_num_rows($result) > 0) {
+                                $userinfo = mysqli_fetch_assoc($result);
+                                session_start();
+                                $_SESSION['userID'] = $result['userID'];
+                            } else {
+                                $sql = "INSERT INTO users (username, profilePic, email, password, googleLogin) VALUES ('{$userinfo['full_name']}', '{$userinfo['picture']}', '{$userinfo['email']}', '{$userinfo['token']}', 1)";
+                                $result = mysqli_query($conn, $sql);
+                                if ($result) {
+                                    session_start();
+                                    $_SESSION['userID'] = $result['userID'];
+                                    header('Location: index.html');
+                                } else {
+                                    echo "Error creating user!";
+                                    die();
+                                }
+                            }
+                        } else { 
+                            echo "<a href='".$client->createAuthUrl()."'><img src='files/google.png' alt='' class='socialIcon'></a>";
+                        }
                     }
                 ?>
                 
