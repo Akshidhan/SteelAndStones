@@ -13,10 +13,9 @@ if(isset($_POST['submitBtn'])){
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-        if($user['account_activation_hash'] = NULL){
+        $row = $result->fetch_assoc();
+        if($row['account_activation_hash'] = NULL){
             session_start();
-            $row = $result->fetch_assoc();
             $_SESSION['userID'] = $row["userID"];
             header('Location: index.html');
         }
@@ -24,8 +23,17 @@ if(isset($_POST['submitBtn'])){
             header("Location: signIn.php?message=notVerified");
         }
     } else {
-        header('Location: login.html');
-        exit();
+        $sql = "SELECT * FROM admin WHERE username='$username' and password='$password'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $_SESSION['adminID'] = $row['adminID'];
+            header("Location: adminPanel.php");
+        } else {
+            header("Location: signIn.php?message=notFound");
+        }
+
     }
 }
 

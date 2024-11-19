@@ -36,6 +36,28 @@
                         history.replaceState(null, null, window.location.pathname);
                     </script>
                 ';
+            } else if ($_GET['message'] == "notFound") {
+                echo '
+                    <div class="modal fade show" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.5);">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    The email and password don"t match. Please check your credentials!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        // Automatically display the modal
+                        var myModal = new bootstrap.Modal(document.getElementById("exampleModal"), {});
+                        myModal.show();
+
+                        history.replaceState(null, null, window.location.pathname);
+                    </script>
+                ';
             }
         }
     ?>
