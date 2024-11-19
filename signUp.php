@@ -16,7 +16,7 @@
         if (isset($_GET['message'])) {
             if ($_GET['message'] == "verifyMail") {
                 echo '
-                    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.5);">
+                    <div class="modal fade show" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.5);">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">

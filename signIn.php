@@ -12,6 +12,33 @@
     <script src="js/signIn.js"></script>
 </head>
 <body>
+    <?php
+        if (isset($_GET['message'])) {
+            if ($_GET['message'] == "notVerified") {
+                echo '
+                    <div class="modal fade show" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.5);">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Your email is not verified. Please verify your email to login!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        // Automatically display the modal
+                        var myModal = new bootstrap.Modal(document.getElementById("exampleModal"), {});
+                        myModal.show();
+
+                        history.replaceState(null, null, window.location.pathname);
+                    </script>
+                ';
+            }
+        }
+    ?>
     <div class="row g-0">
         <div class="col-lg-6 col-md-8 col-12-sm vh-100 d-flex flex-column justify-content-center align-items-center">
             <div class="d-flex flex-column justify-content-center align-items-center gap-3">
@@ -36,7 +63,96 @@
                     <div id="text" class="col-6">Or Continue With</div>
                     <div class="line col-3"></div>
                 </div>
-                <a href=""><img src="files/google.png" alt="" class="socialIcon"></a>
+                <?php
+                    require_once 'config.php';
+                    include 'connect.php';
+
+                    if (isset($_SESSION['userID'])) {
+                        header("Location: index.html");
+                    } else {
+                        if (isset($_GET['code'])) {
+                            $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+                            $client->setAccessToken($token['access_token']);
+
+                            $google_oauth = new Google_Service_Oauth2($client);
+                            $google_account_info = $google_oauth->userinfo->get();
+                            $userinfo = [
+                                'email' => $google_account_info['email'],
+                                'full_name' => $google_account_info['name'],
+                                'picture' => $google_account_info['picture'],
+                                'token' => $google_account_info['id'],
+                            ];
+                            $email = $userinfo['email'];
+
+                            $sql = "SELECT * FROM users WHERE email = ? AND googleLogin = 1";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->bind_param('s', $email);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            if ($result->num_rows > 0) {
+                                $user = $result->fetch_assoc();
+                                session_start();
+                                $_SESSION['userID'] = $user['userID'];
+                                header("Location: index.phps");
+                                exit();
+                            } else {
+                                $checkNormalLogin = "SELECT * FROM users WHERE email = ? AND googleLogin = 0";
+                                $stmt = $conn->prepare($checkNormalLogin);
+                                $stmt->bind_param('s', $email);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+
+                                if ($result->num_rows > 0) {
+                                    $updateQuery = "UPDATE users 
+                                                    SET username = ?, profilePic = ?, password = ?, googleLogin = 1 
+                                                    WHERE email = ? AND googleLogin = 0";
+                                    $updateStmt = $conn->prepare($updateQuery);
+                                    $updateStmt->bind_param(
+                                        'ssss',
+                                        $userinfo['full_name'],
+                                        $userinfo['picture'],
+                                        $userinfo['token'],
+                                        $email
+                                    );
+
+                                    if ($updateStmt->execute()) {
+                                        $user = $result->fetch_assoc();
+                                        session_start();
+                                        $_SESSION['userID'] = $user['userID'];
+                                        header("Location: index.php");
+                                        exit();
+                                    } else {
+                                        echo "Error updating user: " . $conn->error;
+                                    }
+                                } else {
+                                    $sql = "INSERT INTO users (username, profilePic, email, password, googleLogin) 
+                                            VALUES (?, ?, ?, ?, 1)";
+                                    $stmt = $conn->prepare($sql);
+                                    $stmt->bind_param(
+                                        'ssss',
+                                        $userinfo['full_name'],
+                                        $userinfo['picture'],
+                                        $userinfo['email'],
+                                        $userinfo['token']
+                                    );
+
+                                    if ($stmt->execute()) {
+                                        $newUserID = $conn->insert_id;
+                                        session_start();
+                                        $_SESSION['userID'] = $newUserID;
+                                        header("Location: index.php");
+                                        exit();
+                                    } else {
+                                        echo "Error creating user!";
+                                    }
+                                }
+                            }
+                        } else {
+                            echo "<a href='" . $client->createAuthUrl() . "'><img src='files/google.png' alt='' class='socialIcon'></a>";
+                        }
+                    }
+                ?>
                 <p class="px12">Don't have an account? <span class="link"><a href="signUp.html">Sign Up</a></span></p>
             </div>
         </div>
