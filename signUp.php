@@ -12,6 +12,33 @@
     <script src="js/signUp.js"></script>
 </head>
 <body>
+    <?php
+        if (isset($_GET['message'])) {
+            if ($_GET['message'] == "verifyMail") {
+                echo '
+                    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.5);">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Verification mail is sent to your email. Please verify your email!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        // Automatically display the modal
+                        var myModal = new bootstrap.Modal(document.getElementById("exampleModal"), {});
+                        myModal.show();
+
+                        history.replaceState(null, null, window.location.pathname);
+                    </script>
+                ';
+            }
+        }
+    ?>
     <div class="row g-0">
         <div class="col-lg-6 col-md-8 col-12-sm vh-100 d-flex flex-column justify-content-center align-items-center">
             <div class="d-flex flex-column justify-content-center align-items-center gap-3">
@@ -19,7 +46,7 @@
                     <img src="files/logo-no-background 2.png" alt="logo" class="w-100 object-fit-contain ">
                     <p class="heading32600">Create&nbsp;Account</p>
                 </div>
-                <form action="signUp.php" id="signUpForm">
+                <form action="signUpForm.php" id="signUpForm" method="POST">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" class="form-control form-input shadow-none">
                 
@@ -49,17 +76,18 @@
                     <div id="text" class="col-6">Or Continue With</div>
                     <div class="line col-3"></div>
                 </div>
+
                 <?php
                     require_once 'config.php';
                     include 'connect.php';
 
-                    if(isset($_SESSION['userID'])){
+                    if (isset($_SESSION['userID'])) {
                         header("Location: index.html");
                     } else {
-                        if(isset($_GET['code'])){
+                        if (isset($_GET['code'])) {
                             $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
                             $client->setAccessToken($token['access_token']);
-    
+
                             $google_oauth = new Google_Service_Oauth2($client);
                             $google_account_info = $google_oauth->userinfo->get();
                             $userinfo = [
@@ -68,27 +96,74 @@
                                 'picture' => $google_account_info['picture'],
                                 'token' => $google_account_info['id'],
                             ];
-    
-                            $sql = "SELECT * FROM users WHERE email ='{$userinfo['email']}'";
-                            $result = mysqli_query($conn, $sql);
-                            if (mysqli_num_rows($result) > 0) {
-                                $userinfo = mysqli_fetch_assoc($result);
+                            $email = $userinfo['email'];
+
+                            $sql = "SELECT * FROM users WHERE email = ? AND googleLogin = 1";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->bind_param('s', $email);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            if ($result->num_rows > 0) {
+                                $user = $result->fetch_assoc();
                                 session_start();
-                                $_SESSION['userID'] = $result['userID'];
+                                $_SESSION['userID'] = $user['userID'];
+                                header("Location: index.html");
+                                exit();
                             } else {
-                                $sql = "INSERT INTO users (username, profilePic, email, password, googleLogin) VALUES ('{$userinfo['full_name']}', '{$userinfo['picture']}', '{$userinfo['email']}', '{$userinfo['token']}', 1)";
-                                $result = mysqli_query($conn, $sql);
-                                if ($result) {
-                                    session_start();
-                                    $_SESSION['userID'] = $result['userID'];
-                                    header('Location: index.html');
+                                $checkNormalLogin = "SELECT * FROM users WHERE email = ? AND googleLogin = 0";
+                                $stmt = $conn->prepare($checkNormalLogin);
+                                $stmt->bind_param('s', $email);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+
+                                if ($result->num_rows > 0) {
+                                    $updateQuery = "UPDATE users 
+                                                    SET username = ?, profilePic = ?, password = ?, googleLogin = 1 
+                                                    WHERE email = ? AND googleLogin = 0";
+                                    $updateStmt = $conn->prepare($updateQuery);
+                                    $updateStmt->bind_param(
+                                        'ssss',
+                                        $userinfo['full_name'],
+                                        $userinfo['picture'],
+                                        $userinfo['token'],
+                                        $email
+                                    );
+
+                                    if ($updateStmt->execute()) {
+                                        $user = $result->fetch_assoc();
+                                        session_start();
+                                        $_SESSION['userID'] = $user['userID'];
+                                        header("Location: index.html");
+                                        exit();
+                                    } else {
+                                        echo "Error updating user: " . $conn->error;
+                                    }
                                 } else {
-                                    echo "Error creating user!";
-                                    die();
+                                    $sql = "INSERT INTO users (username, profilePic, email, password, googleLogin) 
+                                            VALUES (?, ?, ?, ?, 1)";
+                                    $stmt = $conn->prepare($sql);
+                                    $stmt->bind_param(
+                                        'ssss',
+                                        $userinfo['full_name'],
+                                        $userinfo['picture'],
+                                        $userinfo['email'],
+                                        $userinfo['token']
+                                    );
+
+                                    if ($stmt->execute()) {
+                                        $newUserID = $conn->insert_id;
+                                        session_start();
+                                        $_SESSION['userID'] = $newUserID;
+                                        header("Location: index.html");
+                                        exit();
+                                    } else {
+                                        echo "Error creating user!";
+                                    }
                                 }
                             }
-                        } else { 
-                            echo "<a href='".$client->createAuthUrl()."'><img src='files/google.png' alt='' class='socialIcon'></a>";
+                        } else {
+                            echo "<a href='" . $client->createAuthUrl() . "'><img src='files/google.png' alt='' class='socialIcon'></a>";
                         }
                     }
                 ?>
