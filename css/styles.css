@@ -257,3 +257,46 @@ a{
     bottom: 0;
     left: 10px;
 }
+
+.end-10{
+    right: 2rem;
+}
+
+.accountContainer{
+    background-color: rgba(243, 242, 237, 1);
+    border-radius: 16px;
+}
+
+#username{
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.btn-edit{
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 25px;
+    border: 1px solid rgba(193, 193, 193, 1);
+}
+
+.btn-edit:hover{
+    background:rgba(125, 125, 125, 0.13);
+}
+
+.sections{
+    background-color: rgba(220, 220, 220, 1);
+    border-radius: 16px;
+}
+
+.editPosition{
+    top: 0.5rem;
+    right: 0.5rem;
+}
+
+.data{
+    color: rgba(0, 0, 0, 0.623);
+}
+
+.btn-option{
+    background-color: rgb(246, 214, 173);
+    border-radius: 20px;
+}

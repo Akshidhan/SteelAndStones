@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steel And Stones</title>
+    <link rel="stylesheet" href="css/owl.carousel.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="header position-relative p-5">
+        <h1 class="center">Admin Panel</h1>
+        <button class="btn btn-primary position-absolute top-50 end-10 translate-middle-y"><a href="logout.php">Logout</a></button>
+    </div>
+    <ul class="nav nav-tabs nav-fill">
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#users">Users</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#products">Products</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#paints">Paints</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#quotations">Quotations</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#orders">Orders</a>
+        </li>
+    </ul>
+      
+      <div class="tab-content mt-3 sections">
+        <div class="tab-pane fade" id="users">
+            <div class="container">
+                <div class="customers">
+                    <h2 class="my-5">Customer Accounts</h2>
+                    <div class="addUser my-5">
+                        <form action="add_user.php" method="POST">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp">
+                            </div>
+                            <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            </div>
+                            <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add User</button>
+                        </form>
+                    </div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Logged By Google</th>
+                            <th scope="col">Verified</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Akshidhan</td>
+                            <td>akshidhan@gmail.com</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                    <li><a class="dropdown-item" href="#">Modify</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+    
+                        <tr>
+                            <td>Akshidhan</td>
+                            <td>akshidhan@gmail.com</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                    <li><a class="dropdown-item" href="#">Modify</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+    
+                        <tr>
+                            <td>Akshidhan</td>
+                            <td>akshidhan@gmail.com</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                    <li><a class="dropdown-item" href="#">Modify</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+    
+                <div class="admins my-5">
+                    <h2 class="my-4">Admin Accounts</h2>
+                    <div class="addUser my-5">
+                        <form action="add_admin.php" method="POST">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp">
+                            </div>
+                            <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add User</button>
+                        </form>
+                    </div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">Password</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th>Akshidhan</th>
+                            <td>akshidhan@gmail.com</td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                    <li><a class="dropdown-item" href="#">Modify</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+    
+                        <tr>
+                            <th>Akshidhan</th>
+                            <td>akshidhan@gmail.com</td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                    <li><a class="dropdown-item" href="#">Modify</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+    
+                        <tr>
+                            <th>Akshidhan</th>
+                            <td>akshidhan@gmail.com</td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                    <li><a class="dropdown-item" href="#">Modify</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-pane fade" id="products">
+            <div class="container my-5">
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                <div class="row my-5">
+                    <div class="productCard col">
+                        <div class="card">
+                            <img src="files/products/boots.png" class="card-img-top" alt="Working boot" id="picture">
+                            <div class="card-body">
+                              <h5 class="card-title name">Working Boot</h5>
+                              <p class="card-text description">Best shoes if you are searching for the best protection for your feet and best grip for walking in different surfaces</p>
+                              <p class="card-text price">Rs.4000</p>
+                              <p class="card-text discountedPrice">Rs.3500</p>
+                              <p class="card-text category">Miscellaneous</p>
+                              <p class="card-text specification">Sizes</p>
+                              <p class="card-text mx-2 my-0 py-0 value">42</p>
+                              <p class="card-text mx-2 my-0 py-0 value">43</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item center"><a href="">Edit</a></li>
+                              <li class="list-group-item center"><a href="">Delete</a></li>
+                            </ul>
+                          </div>
+                    </div>
+                    <div class="productCard col">
+                        <div class="card">
+                            <img src="files/products/boots.png" class="card-img-top" alt="Working boot">
+                            <div class="card-body">
+                              <h5 class="card-title">Working Boot</h5>
+                              <p class="card-text">Best shoes if you are searching for the best protection for your feet and best grip for walking in different surfaces</p>
+                              <p class="card-text">Rs.4000</p>
+                              <p class="card-text">Discount Rs.3500</p>
+                              <p class="card-text">Miscellaneous</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item center"><a href="">Edit</a></li>
+                              <li class="list-group-item center"><a href="">Delete</a></li>
+                            </ul>
+                          </div>
+                    </div>
+                    <div class="productCard col">
+                        <div class="card">
+                            <img src="files/products/boots.png" class="card-img-top" alt="Working boot">
+                            <div class="card-body">
+                              <h5 class="card-title">Working Boot</h5>
+                              <p class="card-text">Best shoes if you are searching for the best protection for your feet and best grip for walking in different surfaces</p>
+                              <p class="card-text">Rs.4000</p>
+                              <p class="card-text">Discount Rs.3500</p>
+                              <p class="card-text">Miscellaneous</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item center"><a href="">Edit</a></li>
+                              <li class="list-group-item center"><a href="">Delete</a></li>
+                            </ul>
+                          </div>
+                    </div>
+                    <div class="productCard col">
+                        <div class="card">
+                            <img src="files/products/boots.png" class="card-img-top" alt="Working boot">
+                            <div class="card-body">
+                              <h5 class="card-title">Working Boot</h5>
+                              <p class="card-text">Best shoes if you are searching for the best protection for your feet and best grip for walking in different surfaces</p>
+                              <p class="card-text">Rs.4000</p>
+                              <p class="card-text">Discount Rs.3500</p>
+                              <p class="card-text">Miscellaneous</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item center"><a href="">Edit</a></li>
+                              <li class="list-group-item center"><a href="">Delete</a></li>
+                            </ul>
+                          </div>
+                    </div>
+                    <div class="productCard col">
+                        <div class="card">
+                            <img src="files/products/boots.png" class="card-img-top" alt="Working boot">
+                            <div class="card-body">
+                              <h5 class="card-title">Working Boot</h5>
+                              <p class="card-text">Best shoes if you are searching for the best protection for your feet and best grip for walking in different surfaces</p>
+                              <p class="card-text">Rs.4000</p>
+                              <p class="card-text">Discount Rs.3500</p>
+                              <p class="card-text">Miscellaneous</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item center"><a href="">Edit</a></li>
+                              <li class="list-group-item center"><a href="">Delete</a></li>
+                            </ul>
+                          </div>
+                    </div>
+                    <div class="productCard col">
+                        <div class="card">
+                            <img src="files/products/boots.png" class="card-img-top" alt="Working boot">
+                            <div class="card-body">
+                              <h5 class="card-title">Working Boot</h5>
+                              <p class="card-text">Best shoes if you are searching for the best protection for your feet and best grip for walking in different surfaces</p>
+                              <p class="card-text">Rs.4000</p>
+                              <p class="card-text">Discount Rs.3500</p>
+                              <p class="card-text">Miscellaneous</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item center"><a href="">Edit</a></li>
+                              <li class="list-group-item center"><a href="">Delete</a></li>
+                            </ul>
+                          </div>
+                    </div>
+                </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                      <li class="page-item">
+                        <a class="page-link">Previous</a>
+                      </li>
+                      <li class="page-item"><a class="page-link active" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                      </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="tab-pane fade active show" id="paints">
+            <div class="">
+                <ul class="nav nav-tabs nav-fill">
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" data-bs-toggle="tab" href="#paintCategories">Paint Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#paintList">Paint List</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content mt-3 sections">
+                    <div class="tab-pane fade active show" id="paintCategories">
+                    </div>
+
+                    <div class="tab-pane fade active show" id="paintList">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="quotations">
+            <div class="container my-5">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">orderID</th>
+                        <th scope="col">UserID</th>
+                        <th scope="col">Order Date</th>
+                        <th scope="col">Products</th>
+                        <th scope="col">Grand Total</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2024-06-26</td>
+                        <td>
+                            <ul>
+                                <li>Working Boots - x2 - Rs.8000</li>
+                                <li>Working Boots - x2 - Rs.8000</li>
+                                <li>Working Boots - x2 - Rs.8000</li>
+                            </ul>
+                        </td>
+                        <td>Rs. 24000</td>
+                        <td class="gap-1">
+                            <button class="btn btn-primary my-2">Make Quotation</button><br>
+                            <button class="btn btn-primary my-2">View All Details</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="orders">
+            <div class="container my-5">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">OrderID</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Change Status</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>Normal</td>
+                        <td>pending</td>
+                        <td class="row gap-2 p-4">
+                            <button class="btn btn-primary col-lg-6 col-md-6 col-sm-12" style="max-width: 125px;">Pending</button>
+                            <button class="btn btn-primary col-lg-6 col-md-6 col-sm-12" style="max-width: 125px;">Accepted</button>
+                            <button class="btn btn-primary col-lg-6 col-md-6 col-sm-12" style="max-width: 125px;">Shipped</button>
+                            <button class="btn btn-primary col-lg-6 col-md-6 col-sm-12" style="max-width: 125px;">Finished</button>
+                            <button class="btn btn-primary col-lg-6 col-md-6 col-sm-12" style="max-width: 125px;">Cancelled</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary">View All Details</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+      </div>
+</body>
+</html>
