@@ -18,13 +18,13 @@
     </div>
     <ul class="nav nav-tabs nav-fill">
         <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="tab" href="#users">Users</a>
+          <a class="nav-link active" aria-current="page" data-bs-toggle="tab" href="#users">Users</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#products">Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#paints">Paints</a>
+          <a class="nav-link" href="#paints">Paints</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="tab" href="#quotations">Quotations</a>
@@ -34,8 +34,8 @@
         </li>
     </ul>
       
-      <div class="tab-content mt-3 sections">
-        <div class="tab-pane fade" id="users">
+      <div class="tab-content mt-3 section">
+        <div class="tab-pane fade active show" id="users">
             <div class="container">
                 <div class="customers">
                     <h2 class="my-5">Customer Accounts</h2>
@@ -324,22 +324,72 @@
             </div>
         </div>
 
-        <div class="tab-pane fade active show" id="paints">
-            <div class="">
+        <div class="tab-pane fade" id="paints">
+            <div>
                 <ul class="nav nav-tabs nav-fill">
                     <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" data-bs-toggle="tab" href="#paintCategories">Paint Categories</a>
+                      <a class="nav-link" data-bs-toggle="tab" href="#paintCategories">Paint Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#paintList">Paint List</a>
+                        <a class="nav-link active" aria-current="page" data-bs-toggle="tab" href="#paintList">Paint List</a>
                     </li>
                 </ul>
 
-                <div class="tab-content mt-3 sections">
-                    <div class="tab-pane fade active show" id="paintCategories">
+                <div class="tab-content mt-3 section container">
+                    <div class="tab-pane fade" id="paintCategories">
+                        <h2 class="my-3">Add Category</h2>
+                        <form action="add_user.php" method="POST">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Category</button>
+                        </form>
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Category ID</th>
+                                <th scope="col">Name</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>1</th>
+                                <td>Name</td>
+                              </tr>
+                            </tbody>
+                          </table>
                     </div>
 
                     <div class="tab-pane fade active show" id="paintList">
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Color Name</th>
+                                <th scope="col">Color Code</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Details</th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>Wine Red</th>
+                                <td>1238sd8</td>
+                                <td>Wall Paint</td>
+                                <td>
+                                    <ul>
+                                        <li>Nippon Paint - 5 litres - available</li>
+                                        <li>Nippon Paint - 1 litres - available</li>
+                                    </ul>
+                                </td>
+                                <td class="gap-1">
+                                    <button class="btn btn-primary my-2">Edit details</button><br>
+                                    <button class="btn btn-primary my-2">Delete</button>
+                                </td>
+                              </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

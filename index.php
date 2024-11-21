@@ -67,8 +67,8 @@
           <div class="cto">
             <button class="btn herocto"> Shop Now</button>
             <span class="features grid gap-3">
-              <span class="feature"><img src="files/icons/clock.svg" alt=""> On-time</span>
               <span class="feature"><img src="files/icons/discount.svg" alt=""> Discounts</span>
+              <span class="feature"><img src="files/icons/clock.svg" alt=""> On-time</span>
             </span>
           </div>
         </div>
