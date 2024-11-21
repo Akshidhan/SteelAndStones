@@ -82,7 +82,7 @@
                     include 'connect.php';
 
                     if (isset($_SESSION['userID'])) {
-                        header("Location: index.html");
+                        header("Location: index.php");
                     } else {
                         if (isset($_GET['code'])) {
                             $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
