@@ -1,20 +1,47 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const navLinks = document.querySelectorAll('.nav-link[data-bs-toggle="tab"]');
+    const alertModal = new bootstrap.Modal(document.getElementById('alertModal'));
+    const alertMessageElement = document.getElementById('alertModalMessage');
+    const alertOkButton = document.getElementById('alertModalOkButton');
 
+    const navLinks = document.querySelectorAll('.nav-link[data-bs-toggle="tab"]');
     const lastActiveTab = sessionStorage.getItem('lastActiveTab');
     if (lastActiveTab) {
-      const lastTab = document.querySelector(`.nav-link[href="${lastActiveTab}"]`);
-      if (lastTab) {
-        lastTab.click();
-      }
+        const lastTab = document.querySelector(`.nav-link[href="${lastActiveTab}"]`);
+        if (lastTab) lastTab.click();
     }
 
     navLinks.forEach(link => {
-      link.addEventListener("click", (e) => {
-        sessionStorage.setItem('lastPage', window.location.href);
-      });
+        link.addEventListener("click", () => {
+            sessionStorage.setItem('lastPage', window.location.href);
+        });
     });
-  });
+
+    document.querySelectorAll('[data-bs-target="#modifyModal"]').forEach(button => {
+        button.addEventListener('click', () => {
+            const recordType = button.getAttribute('data-type');
+            const recordId = button.getAttribute('data-id');
+            const username = button.getAttribute('data-username');
+            const email = button.getAttribute('data-email');
+
+            document.getElementById('recordType').value = recordType;
+            document.getElementById('recordId').value = recordId;
+            document.getElementById('modalUsername').value = username;
+            document.getElementById('modalEmail').value = email;
+
+            const emailField = document.getElementById('emailField');
+            emailField.style.display = recordType === 'admin' ? 'none' : 'block';
+        });
+    });
+
+    window.showAlert = (message, reload = false) => {
+        alertMessageElement.textContent = message;
+        alertModal.show();
+
+        alertOkButton.onclick = () => {
+            if (reload) location.reload();
+        };
+    };
+});
 
 function sortTable(section, column) {
     location.href = `test.php?sort=${section}&column=${column}`;
@@ -29,27 +56,32 @@ function deleteRecord(type, id) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert(data.message);
+            showAlert(data.message, true);
         } else {
-            alert(data.message);
+            showAlert(data.message);
         }
     })
     .catch(error => console.error('Error:', error));
 }
 
+function submitModifyForm() {
+    const form = document.getElementById('modifyForm');
+    const formData = new FormData(form);
 
-function showModifyModal(type, id) {
-    document.getElementById('recordType').value = type;
-    document.getElementById('recordID').value = id;
-
-    fetch(`fetch_record.php?type=${type}&id=${id}`)
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('modifyUsername').value = data.username;
-            document.getElementById('modifyEmail').value = data.email || '';
-            document.getElementById('modifyPassword').value = data.password;
-            new bootstrap.Modal(document.getElementById('modifyModal')).show();
-        });
+    fetch('modify_record.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            location.reload();
+        } else {
+            alert("Error: " + data.message);
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 function clearSessionStorage() {
