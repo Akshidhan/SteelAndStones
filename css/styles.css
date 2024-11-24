@@ -300,3 +300,28 @@ a{
     background-color: rgb(246, 214, 173);
     border-radius: 20px;
 }
+
+.specificationForm{
+    max-width: 200px;
+    background-color: rgba(230, 230, 230, 0.416);
+    padding: 0.7rem;
+    border-radius: 10px;
+}
+
+.specificationForm > span{
+    font-size: 22px;
+}
+
+.valuesForm{
+    display: flex;
+    flex-direction: column;
+    padding-left: 0.6rem;
+}
+
+.adminCard{
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.199);
+    border-radius: 20px;
+    height: fit-content;
+    padding: 1rem;
+    width: 100%;
+}

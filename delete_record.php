@@ -2,7 +2,7 @@
 include 'connect.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['type']) && isset($_POST['id'])) {
-    $type = $_POST['type']; // 'user' or 'admin'
+    $type = $_POST['type'];
     $id = intval($_POST['id']);
 
     if ($type === 'user') {
