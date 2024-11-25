@@ -1,3 +1,6 @@
+<?php
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,11 +50,7 @@
                 </ul>
               </li>
             </ul>
-            <form class="d-flex justify-content-between" role="search" style="width: 40%;max-width: 350px;">
-              <div class="search">
-                <button class="btn" type="submit"><img src="files/icons/search.svg" alt=""></button>
-                <input class="searchInput" type="search" placeholder="Search" aria-label="Search">
-              </div>
+            <form class="d-flex justify-content-between" role="search" style="width: 20%;max-width: 100px;">
               <button class="navIcon"><img src="files/icons/cart.svg" alt="cart"></button>
               <button class="navIcon"><img src="files/icons/user.svg" alt="cart"></button>
             </form>
@@ -59,183 +58,71 @@
         </div>
     </nav>
 
-      <!-- hero section -->
-      <div class="row p-5 w-100 section">
-        <div class="col-lg-6 col-md-6 col-sm-12 flexCenter">
-          <p class="heroFont">Empowering Builders,</br>Fixers, and Creators</br>Since 2024!</p>
-          <p class="subtext">Build Better, Build Stronger with Quality Tools and Supplies.</p>
-          <div class="cto">
-            <button class="btn herocto"> Shop Now</button>
-            <span class="features grid gap-3">
-              <span class="feature"><img src="files/icons/discount.svg" alt=""> Discounts</span>
-              <span class="feature"><img src="files/icons/clock.svg" alt=""> On-time</span>
-            </span>
-          </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-12 d-none d-lg-flex d-md-flex flexCenter">
-          <img src="files/hero.png" alt="Hero Image" width="100%" class="p-2">
-        </div>
-      </div>
-
-      <!-- secondary section -->
-      <div class="discount section">
-        <p class="secondaryMainText py-5">Products on discount!</p>
-        
-        <!-- carousel -->
-        <div class="owl-carousel owl-theme owl-loaded p-5">
-          <div class="owl-stage-outer">
-              <div class="owl-stage">
-
-                  <div class="owl-item">
-                    <div class="card">
-                      <img src="files/products/boots.png" class="card-img-top" alt="boots">
-                      <div class="card-body">
-                        <h5 class="card-title">Safety Boots</h5>
-                        <p class="card-text"><s>Rs. 4200</s> Rs.4000</p>
-                        <a href="#" class="btn btn-addToCart">Add to Cart</a>
-                      </div>
+    <div class="vh-90 d-flex justify-content-center align-items-center">
+        <div class="itemContainer p-3">
+            <img src="files/icons/ic_round-arrow-back.svg" alt="Back Arrow" class="mb-3">
+            <div class="content">
+                <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <img src="files/products/boots.png" alt="" class="w-100 rounded productImage">
                     </div>
-                  </div>
-
-                  <div class="owl-item">
-                    <div class="card">
-                      <img src="files/products/boots.png" class="card-img-top" alt="boots">
-                      <div class="card-body">
-                        <h5 class="card-title">Safety Boots</h5>
-                        <p class="card-text"><s>Rs. 4200</s> Rs.4000</p>
-                        <a href="#" class="btn btn-addToCart">Add to Cart</a>
-                      </div>
+                    <div class="d-flex justify-content-center align-items-center col-lg-7 col-md-7 col-sm-12">
+                        <div class="prodContent d-flex flex-column justify-content-center align-items-center p-4 gap-5">
+                            <div>
+                                <div class="d-flex justify-content-between w-100">
+                                    <span class="ProdName">Working Boots</span>
+                                    <span id="wishList">
+                                        <?php if ($wishlisted): ?>
+                                            <img src="files/icons/wishlist-filled.svg" alt="wishlist icon">
+                                        <?php else: ?>
+                                            <img src="files/icons/wishlist.svg" alt="wishlist icon">
+                                        <?php endif; ?>
+                                    </span>
+                                </div>
+                                <div class="ProdDescription w-100">
+                                    Best shoes if you are searching for the best protection for your feet and best grip for walking in different surfaces
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex align-items-center justify-content-between w-100 cartActions">
+                                <div class="quantity d-inline p-1">
+                                    <button class="btn" onclick="increaseCartItem()">+</button>
+                                    <span id="quantity"></span>
+                                    <button class="btn" onclick="decreaseCarItem()">-</button>
+                                </div>
+                                <div>
+                                    <button class="btn btn-atc">Add to cart</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-
-                  <div class="owl-item">
-                    <div class="card">
-                      <img src="files/products/boots.png" class="card-img-top" alt="boots">
-                      <div class="card-body">
-                        <h5 class="card-title">Safety Boots</h5>
-                        <p class="card-text"><s>Rs. 4200</s> Rs.4000</p>
-                        <a href="#" class="btn btn-addToCart">Add to Cart</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="owl-item">
-                    <div class="card">
-                      <img src="files/products/boots.png" class="card-img-top" alt="boots">
-                      <div class="card-body">
-                        <h5 class="card-title">Safety Boots</h5>
-                        <p class="card-text"><s>Rs. 4200</s> Rs.4000</p>
-                        <a href="#" class="btn btn-addToCart">Add to Cart</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="owl-item">
-                    <div class="card">
-                      <img src="files/products/boots.png" class="card-img-top" alt="boots">
-                      <div class="card-body">
-                        <h5 class="card-title">Safety Boots</h5>
-                        <p class="card-text"><s>Rs. 4200</s> Rs.4000</p>
-                        <a href="#" class="btn btn-addToCart">Add to Cart</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="owl-item">
-                    <div class="card">
-                      <img src="files/products/boots.png" class="card-img-top" alt="boots">
-                      <div class="card-body">
-                        <h5 class="card-title">Safety Boots</h5>
-                        <p class="card-text"><s>Rs. 4200</s> Rs.4000</p>
-                        <a href="#" class="btn btn-addToCart">Add to Cart</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="owl-item">
-                    <div class="card">
-                      <img src="files/products/boots.png" class="card-img-top" alt="boots">
-                      <div class="card-body">
-                        <h5 class="card-title">Safety Boots</h5>
-                        <p class="card-text"><s>Rs. 4200</s> Rs.4000</p>
-                        <a href="#" class="btn btn-addToCart">Add to Cart</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="owl-item">
-                    <div class="card">
-                      <img src="files/products/boots.png" class="card-img-top" alt="boots">
-                      <div class="card-body">
-                        <h5 class="card-title">Safety Boots</h5>
-                        <p class="card-text"><s>Rs. 4200</s> Rs.4000</p>
-                        <a href="#" class="btn btn-addToCart">Add to Cart</a>
-                      </div>
-                    </div>
-                  </div>
-              </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Third Section -->
-      <div class="section container">
-        <p class="thirdText py-5">Design you special space</p>
-        <div class="row">
-          <div class="col-lg-3 col-md-4 col-sm-6 picSection">
-            <img src="files/commercial.jpg" alt="commercial" class="extraPic">
-            <p>Commercial</p>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 picSection">
-            <img src="files/maintenance.jpg" alt="maintenance" class="extraPic">
-            <p>Maintenance</p>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 picSection">
-            <img src="files/infrastructure.jpg" alt="infrstructure" class="extraPic">
-            <p>Infrastructure</p>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 picSection">
-            <img src="files/residential.jpg" alt="residential" class="extraPic">
-            <p>Residential</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- footer -->
-      <footer>
-        <div class="container-fluid px-4">
-          <div class="row align-items-start py-5">
-            <div class="col-lg-4 col-sm-12 d-flex flex-column justify-content-center center footerSection">
-              <p class="heading">Contact Us</p>
-              <p class="links">No.456, Galle Main Road, Colombo - 06</p>
-              <p class="links">(123) 456-7890</p>
-              <p class="links">support@steelandstones.com</p>
+                    
+                </div>
             </div>
-            <div class="col-lg-4 col-sm-12 d-flex flex-column justify-content-center center footerSection">
-              <p class="heading">Quick Links</p>
-              <p class="links">About Us</p>
-              <p class="links">Category</p>
-              <p class="links">Services</p>
-              <p class="links">FAQ</p>
-              <p class="links">Return Policy</p>
-            </div>
-            <div class="col-lg-4 col-sm-12 d-flex flex-column justify-content-center center footerSection">
-              <p class="heading">Open Hours</p>
-              <p class="links">Mon - Fri: 8:00 AM - 8:00 PM</p>
-              <p class="links">Sat: 9:00 AM - 5:00 PM</p>
-              <p class="links">Sun: Closed</p>
-            </div>
-          </div>
-          <div class="divider"></div>
-          <div class="footerEnd">
-            <p>© 2024 Steel and Stones. All Rights Reserved.</p>
-            <div class="tnc">
-              <a href="#">Terms&nbsp;&&nbsp;Conditions</a>
-              <a href="#">Privacy&nbsp;Policy</a>
-            </div>
-          </div>
         </div>
-      </footer>
-    
+    </div>
+
+    <script>
+        var quantity = 0;
+        quantitySpan = document.getElementById('quantity');
+        wishlistIcon = document.getElementById('wishList');
+        quantitySpan.innerHTML = quantity;
+
+        function addWishList(){
+
+        }
+
+        function increaseCartItem(){
+            quantity++;
+            quantitySpan.innerHTML = quantity;
+        }
+
+        function decreaseCarItem(){
+            if(quantity != 0){
+                quantity--;
+                quantitySpan.innerHTML = quantity;
+            }
+        }
+    </script>
 </body>
 </html>

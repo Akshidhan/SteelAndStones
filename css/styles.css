@@ -325,3 +325,48 @@ a{
     padding: 1rem;
     width: 100%;
 }
+
+.itemContainer{
+    background: rgba(243, 242, 237, 1);
+    margin: 4rem;
+    border-radius: 20px;
+    max-width: 1000px;
+}
+
+.ProdName{
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.ProdDescription{
+    font-size: 18px;
+    font-weight: 400;
+    color: rgba(129, 129, 129, 1);
+}
+
+.productImage{
+    height: 100%;
+    object-fit: cover;
+}
+
+.quantity{
+    border: solid 2px ;
+    border-radius: 10px;
+}
+
+.vh-90{
+    min-height: 89vh;
+}
+
+.btn-atc{
+    background: rgba(184, 210, 179, 1);
+}
+
+.prodContent{
+    /* max-height: 274px;
+    max-width: 435px; */
+}
+
+.cartActions{
+    max-width: 322px;
+}
