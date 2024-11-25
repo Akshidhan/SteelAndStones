@@ -122,7 +122,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="submit" class="btn btn-primary" onclick="saveProductChanges(event)">Save Changes</button>
                     </div>
                 </form>
             </div>
@@ -540,11 +540,9 @@
         });
 
         function editProduct(productID) {
-            // Fetch the product details from the server
             fetch(`getProductDetails.php?productID=${productID}`)
                 .then(response => response.json())
                 .then(data => {
-                    // Populate the modal fields
                     document.getElementById('editProductID').value = data.productID;
                     document.getElementById('editProductName').value = data.name;
                     document.getElementById('editDescription').value = data.description;
@@ -556,11 +554,9 @@
                     document.getElementById('editPrice').value = data.price;
                     document.getElementById('editDiscountedPrice').value = data.discountedPrice;
 
-                    // Populate specifications
                     const specList = document.getElementById('editSpecList');
-                    specList.innerHTML = ''; // Clear existing specifications
+                    specList.innerHTML = '';
 
-                    // Render each specification with its values
                     data.specifications.forEach(spec => {
                         const specDiv = document.createElement('div');
                         specDiv.id = `spec-${spec.specID}`;
@@ -658,11 +654,86 @@
             const specDiv = document.querySelector(`#spec-${specID}`);
             if (!specDiv) {
                 console.error(`Specification element not found for specID: ${specID}`);
-                return; // Stop if no matching element is found
+                return;
             }
             specDiv.remove();
         }
 
+        function saveProductChanges(event) {
+            event.preventDefault();
+
+            const productID = document.getElementById('editProductID').value;
+            const productName = document.getElementById('editProductName').value;
+            const description = document.getElementById('editDescription').value;
+            const categoryID = document.getElementById('editCategory').value;
+            const price = document.getElementById('editPrice').value;
+            const discountedPrice = document.getElementById('editDiscountedPrice').value;
+
+            const specifications = [];
+
+            document.querySelectorAll('.specificationForm').forEach(spec => {
+                const specID = spec.id.split('-')[1];
+                const specNameElement = spec.querySelector(`input[name="specifications[${specID}][name]"]`);
+                const specName = specNameElement ? specNameElement.value : null;
+                
+                const values = [];
+                
+                spec.querySelectorAll('.specValues > div').forEach(valueDiv => {
+                    const valueID = valueDiv.id.split('-')[2];
+                    
+                    const valueNameElement = valueDiv.querySelector(`input[name="specifications[${specID}][values][${valueID}][name]"]`);
+                    const valueName = valueNameElement ? valueNameElement.value : null;
+                    
+                    const stockElement = valueDiv.querySelector(`input[name="specifications[${specID}][values][${valueID}][stock]"]`);
+                    const stock = stockElement ? stockElement.value : null;
+                    
+                    if (valueName !== null && stock !== null) {
+                        values.push({ valueName, stock });
+                    } else {
+                        console.warn(`Missing data for specification value ID: ${valueID}`);
+                    }
+                });
+
+                if (specName) {
+                    specifications.push({ specName, values });
+                } else {
+                    console.warn(`Specification ID: ${specID} is missing name or values.`);
+                }
+            });
+
+            // Prepare the payload
+            const payload = {
+                productID,
+                name: productName,
+                description,
+                categoryID,
+                price,
+                discountedPrice,
+                specifications, // Send the specifications without specID
+            };
+
+            // Send the updated data via fetch
+            fetch('updateProductDetails.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Product details updated successfully!');
+                        location.reload();
+                    } else {
+                        alert('Failed to update product details.');
+                        console.error(data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating product details:', error);
+                });
+        }
     </script>
 </body>
 </html>
