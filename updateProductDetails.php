@@ -32,15 +32,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $valueName = $value['valueName'];
                 $stock = $value['stock'];
 
-                $insertValue = $conn->prepare("INSERT INTO specificationvalue (specID, valueName, stock) VALUES (?, ?, ?)");
+                $insertValue = $conn->prepare("INSERT INTO specificationvalue (specID, valName, stock) VALUES (?, ?, ?)");
                 $insertValue->bind_param('isi', $specID, $valueName, $stock);
                 $insertValue->execute();
             }
         }
 
-        echo json_encode(['success' => true]);
+        echo json_encode(['success' => true], 200 );
     } else {
-        echo json_encode(['success' => false, 'error' => $conn->error]);
+        echo json_encode(['success' => false, 'error' => $conn->error], 500);
     }
 }
 ?>

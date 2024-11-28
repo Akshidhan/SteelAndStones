@@ -1,3 +1,11 @@
+<?php
+
+  include 'connect.php';
+  session_start();
+
+  $discountedProductQuery="SELECT * from product WHERE discountedPrice != 0.00";
+  $discountedProduct = $conn->query($discountedProductQuery);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,16 +42,17 @@
                   Categories
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Construction Materials</a></li>
-                  <li><a class="dropdown-item" href="#">Tools</a></li>
-                  <li><a class="dropdown-item" href="#">Paints and Finishing</a></li>
-                  <li><a class="dropdown-item" href="#">Fasteners and Fittings</a></li>
-                  <li><a class="dropdown-item" href="#">Electric Supplies</a></li>
-                  <li><a class="dropdown-item" href="#">Plumbing Supplies</a></li>
-                  <li><a class="dropdown-item" href="#">Safety Equipments</a></li>
-                  <li><a class="dropdown-item" href="#">Gardening Tools</a></li>
-                  <li><a class="dropdown-item" href="#">Woodworking Supplies</a></li>
-                  <li><a class="dropdown-item" href="#">Miscellaneous</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=1">Construction Materials</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=2">Tools</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=3">Paints and Finishing</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=4">Fasteners and Fittings</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=5">Electric Supplies</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=6">Plumbing Supplies</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=7">Safety Equipments</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=8">Gardening Tools</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=9">Woodworking Supplies</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=10">Miscellaneous</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=All">All</a></li>
                 </ul>
               </li>
             </ul>
@@ -52,8 +61,8 @@
                 <button class="btn" type="submit"><img src="files/icons/search.svg" alt=""></button>
                 <input class="searchInput" type="search" placeholder="Search" aria-label="Search">
               </div>
-              <button class="navIcon"><img src="files/icons/cart.svg" alt="cart"></button>
-              <button class="navIcon"><img src="files/icons/user.svg" alt="cart"></button>
+              <a href="cart.php" class="navIcon"><img src="files/icons/cart.svg" alt="cart"></a>
+              <a href="userProfile.php" class="navIcon"><img src="files/icons/user.svg" alt="user"></a>
             </form>
           </div>
         </div>
@@ -65,7 +74,7 @@
           <p class="heroFont">Empowering Builders,</br>Fixers, and Creators</br>Since 2024!</p>
           <p class="subtext">Build Better, Build Stronger with Quality Tools and Supplies.</p>
           <div class="cto">
-            <button class="btn herocto"> Shop Now</button>
+            <button class="btn herocto">Shop Now</button>
             <span class="features grid gap-3">
               <span class="feature"><img src="files/icons/discount.svg" alt=""> Discounts</span>
               <span class="feature"><img src="files/icons/clock.svg" alt=""> On-time</span>
@@ -85,94 +94,20 @@
         <div class="owl-carousel owl-theme owl-loaded p-5">
           <div class="owl-stage-outer">
               <div class="owl-stage">
-
-                  <div class="owl-item">
-                    <div class="card">
-                      <img src="files/products/boots.png" class="card-img-top" alt="boots">
-                      <div class="card-body">
-                        <h5 class="card-title">Safety Boots</h5>
-                        <p class="card-text"><s>Rs. 4200</s> Rs.4000</p>
-                        <a href="#" class="btn btn-addToCart">Add to Cart</a>
+                <?php if ($discountedProduct->num_rows>1): ?>
+                  <?php while($row = $discountedProduct->fetch_assoc()): ?>
+                    <div class="owl-item">
+                      <div class="card">
+                        <img src="<?= htmlspecialchars($row['picture']); ?>" class="card-img-top" alt="<?= htmlspecialchars($row['name']); ?>">
+                        <div class="card-body">
+                          <h5 class="card-title"><?= htmlspecialchars($row['name']); ?></h5>
+                          <p class="card-text"><s>Rs.<?= htmlspecialchars($row['price']); ?></s> Rs.<?= htmlspecialchars($row['discountedPrice']); ?></p>
+                          <a href="viewProduct.php?productID=<?= htmlspecialchars($row['productID']); ?>" class="btn btn-addToCart">View Product</a>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="owl-item">
-                    <div class="card">
-                      <img src="files/products/boots.png" class="card-img-top" alt="boots">
-                      <div class="card-body">
-                        <h5 class="card-title">Safety Boots</h5>
-                        <p class="card-text"><s>Rs. 4200</s> Rs.4000</p>
-                        <a href="#" class="btn btn-addToCart">Add to Cart</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="owl-item">
-                    <div class="card">
-                      <img src="files/products/boots.png" class="card-img-top" alt="boots">
-                      <div class="card-body">
-                        <h5 class="card-title">Safety Boots</h5>
-                        <p class="card-text"><s>Rs. 4200</s> Rs.4000</p>
-                        <a href="#" class="btn btn-addToCart">Add to Cart</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="owl-item">
-                    <div class="card">
-                      <img src="files/products/boots.png" class="card-img-top" alt="boots">
-                      <div class="card-body">
-                        <h5 class="card-title">Safety Boots</h5>
-                        <p class="card-text"><s>Rs. 4200</s> Rs.4000</p>
-                        <a href="#" class="btn btn-addToCart">Add to Cart</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="owl-item">
-                    <div class="card">
-                      <img src="files/products/boots.png" class="card-img-top" alt="boots">
-                      <div class="card-body">
-                        <h5 class="card-title">Safety Boots</h5>
-                        <p class="card-text"><s>Rs. 4200</s> Rs.4000</p>
-                        <a href="#" class="btn btn-addToCart">Add to Cart</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="owl-item">
-                    <div class="card">
-                      <img src="files/products/boots.png" class="card-img-top" alt="boots">
-                      <div class="card-body">
-                        <h5 class="card-title">Safety Boots</h5>
-                        <p class="card-text"><s>Rs. 4200</s> Rs.4000</p>
-                        <a href="#" class="btn btn-addToCart">Add to Cart</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="owl-item">
-                    <div class="card">
-                      <img src="files/products/boots.png" class="card-img-top" alt="boots">
-                      <div class="card-body">
-                        <h5 class="card-title">Safety Boots</h5>
-                        <p class="card-text"><s>Rs. 4200</s> Rs.4000</p>
-                        <a href="#" class="btn btn-addToCart">Add to Cart</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="owl-item">
-                    <div class="card">
-                      <img src="files/products/boots.png" class="card-img-top" alt="boots">
-                      <div class="card-body">
-                        <h5 class="card-title">Safety Boots</h5>
-                        <p class="card-text"><s>Rs. 4200</s> Rs.4000</p>
-                        <a href="#" class="btn btn-addToCart">Add to Cart</a>
-                      </div>
-                    </div>
-                  </div>
+                  <?php endwhile; ?>
+                <?php endif; ?>
               </div>
           </div>
         </div>
@@ -212,9 +147,9 @@
               <p class="links">support@steelandstones.com</p>
             </div>
             <div class="col-lg-4 col-sm-12 d-flex flex-column justify-content-center center footerSection">
-              <p class="heading">Quick Links</p>
-              <p class="links">About Us</p>
-              <p class="links">Category</p>
+              <p class="heading">Useful Links</p>
+              <p class="links"><a href="aboutUs.php">About Us</a></p>
+              <p class="links"><a href="contactUs.php">Contact Us</a></p>
               <p class="links">Services</p>
               <p class="links">FAQ</p>
               <p class="links">Return Policy</p>

@@ -5,6 +5,7 @@
 
     $userID = $_SESSION['userID'];
     $productID = $_GET['productID'];
+    $specification;
 
     $productQuery = "SELECT * FROM Product WHERE productID = $productID";
     $productResult = $conn->query($productQuery);
@@ -17,6 +18,8 @@
     $specificationResult = $conn->query($specificationQuery);
     if ($specificationResult->num_rows==1){
         $specification = mysqli_fetch_assoc($specificationResult);
+    } else{
+        $specification['specName']='Default';
     }
 
     $valueQuery = "
@@ -99,12 +102,17 @@
                   <li><a class="dropdown-item" href="#">Gardening Tools</a></li>
                   <li><a class="dropdown-item" href="#">Woodworking Supplies</a></li>
                   <li><a class="dropdown-item" href="#">Miscellaneous</a></li>
+                  <li><a class="dropdown-item" href="#">All</a></li>
                 </ul>
               </li>
             </ul>
-            <form class="d-flex justify-content-between" role="search" style="width: 20%;max-width: 100px;">
-              <button class="navIcon"><img src="files/icons/cart.svg" alt="cart"></button>
-              <button class="navIcon"><img src="files/icons/user.svg" alt="cart"></button>
+            <form class="d-flex justify-content-between" role="search" style="width: 40%;max-width: 350px;">
+              <div class="search">
+                <button class="btn" type="submit"><img src="files/icons/search.svg" alt=""></button>
+                <input class="searchInput" type="search" placeholder="Search" aria-label="Search">
+              </div>
+              <a href="cart.php" class="navIcon"><img src="files/icons/cart.svg" alt="cart"></a>
+              <a href="userProfile.php" class="navIcon"><img src="files/icons/user.svg" alt="user"></a>
             </form>
           </div>
         </div>
@@ -136,7 +144,7 @@
                         <img src="<?php echo $product['picture'] ?>" alt="" class="w-100 rounded productImage">
                     </div>
                     <div class="d-flex justify-content-center align-items-center col-lg-7 col-md-7 col-sm-12">
-                        <form action="">
+                        <form id="addToCartForm">
                             <div class="prodContent d-flex flex-column justify-content-center align-items-center p-4 gap-5">
                                 <div>
                                         <div class="d-flex justify-content-between w-100">
@@ -159,16 +167,35 @@
                                         </div>
                                         <div class="ProdDescription w-100"><?php echo $product['description'] ?></div>
                                         <div class="specification mt-3">
-                                            <input type="text" name="specification" value="<?php echo $specification['specID'] ?>" class="d-none">
-                                            <span class="specName"><?php echo $specification['specName'] ?></span>
-                                            <div class="values">
-                                                <?php if($valueResult->num_rows>0): ?>
-                                                    <?php while($row= $valueResult->fetch_assoc()): ?>
-                                                            <input type="radio" class="btn-check valueCheck" name="options-base" id="<?= htmlspecialchars($row['valueID']) ?>" autocomplete="off" onclick="resetQuantity(<?= htmlspecialchars($row['valueID']) ?>, <?= htmlspecialchars($row['stock']) ?>)" value="<?= htmlspecialchars($row['valueID']) ?>" <?php if ($row['stock'] == 0) { echo "disabled"; } ?>>
-                                                            <label class="btn btn-outline-secondary" for="<?= htmlspecialchars($row['valueID']) ?>"><?= htmlspecialchars($row['specValue']) ?></label>
-                                                    <?php endwhile; ?>
+                                            <?php if ($specification['specName'] == 'Default'): ?>
+                                                <input type="text" name="specID" value="<?php echo htmlspecialchars($specification['specID']); ?>" class="d-none">
+                                                <?php if ($valueResult->num_rows > 0): ?>
+                                                    <?php $row = $valueResult->fetch_assoc();?>
+                                                    <input type="radio" class="btn-check valueCheck d-none" name="valueID" autocomplete="off" value="Default" checked>
+                                                    <script>
+                                                        document.addEventListener('DOMContentLoaded', function () {
+                                                            resetQuantity(<?php echo htmlspecialchars($row['valueID']); ?>, <?php echo htmlspecialchars($row['stock']); ?>);
+                                                            printQuantity();
+                                                        });
+                                                    </script>
                                                 <?php endif; ?>
-                                            </div>
+                                            <?php else: ?>
+                                                <input type="text" name="specID" value="<?php echo htmlspecialchars($specification['specID']); ?>" class="d-none">
+                                                <span class="specName"><?php echo htmlspecialchars($specification['specName']); ?></span>
+                                                <div class="values">
+                                                    <?php if($valueResult->num_rows > 0): ?>
+                                                        <?php while($row = $valueResult->fetch_assoc()): ?>
+                                                            <input type="radio" class="btn-check valueCheck" name="valueID" id="<?= htmlspecialchars($row['valueID']); ?>" autocomplete="off" 
+                                                                onclick="resetQuantity(<?= htmlspecialchars($row['valueID']); ?>, <?= htmlspecialchars($row['stock']); ?>)" 
+                                                                value="<?= htmlspecialchars($row['valueID']); ?>" 
+                                                                <?php if ($row['stock'] == 0) { echo "disabled"; } ?>>
+                                                            <label class="btn btn-outline-secondary" for="<?= htmlspecialchars($row['valueID']); ?>">
+                                                                <?= htmlspecialchars($row['specValue']); ?>
+                                                            </label>
+                                                        <?php endwhile; ?>
+                                                    <?php endif; ?>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
                                 </div>
                                 
@@ -196,12 +223,16 @@
         const alertMessageElement = document.getElementById('alertModalMessage');
         const alertOkButton = document.getElementById('alertModalOkButton');
 
+        const addToCart = document.getElementById('addToCartForm');
+
         var quantity = 0;
         var quantitySpan = document.getElementById('quantity');
         var wishlistIcon = document.getElementById('wishList');
         var value;
         var stock;
 
+        printQuantity();
+        
         window.showAlert = (message, reload = false) => {
             alertMessageElement.textContent = message;
             alertModal.show();
@@ -233,17 +264,17 @@
                     showAlert("Stock limit reached!");
                 }
             } else {
-                showAlert("Please select a specification value!");
+                showAlert("Please select a valid specification first!");
             }
         }
 
-        function decreaseCartItem(event){
+        function decreaseCarItem(event){
             event.preventDefault();
-            if (quantity>0){
+            if (quantity > 0) {
                 quantity--;
-                printQuantity;
+                printQuantity();
             } else {
-                showAlert("Please select a valid number");
+                showAlert("Cannot decrease below zero!");
             }
         }
 
@@ -283,9 +314,37 @@
             .catch(err => console.error('Error:', err));
         }
 
-        function addtocart(){
-            
+        function addToCartData(event) {
+            event.preventDefault();
+
+            const formData = new FormData(addToCartForm);
+
+            formData.append('userID', <?php echo $userID; ?>);
+            formData.append('productID', <?php echo $productID; ?>);
+            formData.append('quantity', quantity);
+
+            const data = Object.fromEntries(formData.entries());
+
+            fetch("add_to_cart.php", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showAlert("Item added to cart successfully!");
+                    location.reload();
+                } else {
+                    showAlert("Failed to add item to cart.");
+                }
+            })
+            .catch(err => {
+                console.error("Error:", err);
+            });
         }
+
+        addToCartForm.addEventListener('submit', addToCartData);
     </script>
 </body>
 </html>

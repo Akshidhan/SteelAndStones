@@ -116,7 +116,7 @@
                                 $user = $result->fetch_assoc();
                                 session_start();
                                 $_SESSION['userID'] = $user['userID'];
-                                header("Location: index.phps");
+                                header("Location: index.php");
                                 exit();
                             } else {
                                 $checkNormalLogin = "SELECT * FROM users WHERE email = ? AND googleLogin = 0";

@@ -23,7 +23,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <link rel="stylesheet" href="css/styles.css">
-    <script src="js/adminPage.js"></script>
 </head>
 <body>
     <!--Add Specification Modal-->
@@ -182,7 +181,7 @@
         </div>
         <div class="mb-2">
             <label for="" class="form-label">Specification</label>
-            <button class="btn" id="addSpecBtn">
+            <button class="btn" onclick="showSpecModal(event)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                     <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
@@ -322,53 +321,6 @@
         </nav>
     </div>
 
-    <!-- Modify Modal -->
-    <div class="modal fade" id="modifyModal" tabindex="-1" aria-labelledby="modifyModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modifyModalLabel">Modify Record</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="modifyForm">
-                        <input type="hidden" id="recordType" name="type">
-                        <input type="hidden" id="recordId" name="id">
-                        <div class="mb-3">
-                            <label for="modalUsername" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="modalUsername" name="username">
-                        </div>
-                        <div class="mb-3" id="emailField">
-                            <label for="modalEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="modalEmail" name="email">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="submitModifyForm()">Save Changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Alert Modal -->
-    <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="alertModalLabel">Alert</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="alertModalMessage">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="alertModalOkButton" data-bs-dismiss="modal">OK</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
         specifications = [];
         const specNameInput = document.getElementById('specName');
@@ -380,12 +332,11 @@
         const specificationName = document.getElementById('specificationName');
         const addProductForm = document.getElementById('addProdForm');
 
-
-        document.getElementById('addSpecBtn').addEventListener('click', function (event) {
+        function showSpecModal(event) {
             event.preventDefault();
             specNameInput.value = '';
             addSpecModal.show();
-        });
+        };
 
         document.getElementById('saveSpecButton').addEventListener('click', function (event){
             event.preventDefault();
@@ -400,6 +351,7 @@
         
         document.getElementById('saveValueBtn').addEventListener('click', function(event){
             event.preventDefault();
+            debugger;
 
             const specName = specificationName.value;
             const valueName = valueNameInput.value;
@@ -451,65 +403,102 @@
             rerenderSpecs();
         }
 
-        function rerenderSpecs(){
+        // function rerenderSpecs() {
+        //     const specificationContainer = document.getElementById('specList');
+        //     specificationContainer.innerHTML = "";
+
+        //     specifications.forEach(spec => {
+        //         const specDiv = document.createElement('div');
+        //         specDiv.classList.add('specificationForm', 'col');
+
+        //         const specNameSpan = document.createElement('span');
+        //         specNameSpan.textContent = spec.specName;
+        //         specDiv.appendChild(specNameSpan);
+
+        //         const addValueBtn = document.createElement('button');
+        //         addValueBtn.classList.add('addValueBtn', 'btn', 'd-inline');
+        //         addValueBtn.onclick = function(event) {
+        //             addValue(spec.specName, event);
+        //         };
+        //         addValueBtn.innerHTML = `
+        //             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+        //                 <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+        //                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+        //             </svg>`;
+        //         specDiv.appendChild(addValueBtn);
+
+        //         const removeSpecBtn = document.createElement('button');
+        //         removeSpecBtn.classList.add('removeSpecBtn', 'btn', 'd-inline');
+        //         removeSpecBtn.onclick = function(event) {
+        //             removeSpec(spec.specName, event);
+        //         };
+        //         removeSpecBtn.innerHTML = `
+        //             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
+        //                 <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+        //                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+        //             </svg>`;
+        //         specDiv.appendChild(removeSpecBtn);
+
+        //         specificationContainer.appendChild(specDiv);
+        //     });
+        // }
+        function rerenderSpecs() {
             const specificationContainer = document.getElementById('specList');
+            
+            // Clear the container first to avoid duplicate entries
             specificationContainer.innerHTML = "";
 
             specifications.forEach(spec => {
                 const specDiv = document.createElement('div');
                 specDiv.classList.add('specificationForm', 'col');
 
+                // Add the specification name
                 const specNameSpan = document.createElement('span');
                 specNameSpan.textContent = spec.specName;
                 specDiv.appendChild(specNameSpan);
 
+                // Add a list of values and stock
+                const valueList = document.createElement('ul');
+                valueList.classList.add('valueList');
+                spec.value.forEach(val => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${val.valueName}: ${val.stock} in stock`;
+                    valueList.appendChild(listItem);
+                });
+                specDiv.appendChild(valueList);
+
+                // Add the "Add Value" button
                 const addValueBtn = document.createElement('button');
                 addValueBtn.classList.add('addValueBtn', 'btn', 'd-inline');
                 addValueBtn.onclick = function(event) {
-                    addValue(spec.specName ,event);
-                }
+                    addValue(spec.specName, event);
+                };
                 addValueBtn.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                </svg>
-                `;
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>`;
                 specDiv.appendChild(addValueBtn);
 
+                // Add the "Remove Specification" button
                 const removeSpecBtn = document.createElement('button');
                 removeSpecBtn.classList.add('removeSpecBtn', 'btn', 'd-inline');
                 removeSpecBtn.onclick = function(event) {
                     removeSpec(spec.specName, event);
                 };
                 removeSpecBtn.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-square" viewBox="0 0 16 16">
-                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
-                </svg>
-                `;
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
+                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>`;
                 specDiv.appendChild(removeSpecBtn);
 
-                const valuesFormDiv = document.createElement('div');
-                valuesFormDiv.classList.add('valuesForm', 'my-2');
-
-                spec.value.forEach(val => {
-                const valueDiv = document.createElement('div');
-                valueDiv.classList.add('valueEntry');
-                valueDiv.innerHTML = `${val.valueName} (Stock: ${val.stock})
-                    <button class="removeValueBtn d-inline" onclick="removeValue(${spec.valueName}, ${val.valueName}, event)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-square" viewBox="0 0 16 16">
-                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
-                        </svg>
-                    </button>
-                `;
-                valuesFormDiv.appendChild(valueDiv);
-                });
-
-                specDiv.appendChild(valuesFormDiv);
+                // Append the specification div to the container
                 specificationContainer.appendChild(specDiv);
             });
         }
+
+
 
         addProductForm.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -532,6 +521,7 @@
                 .then(data => {
                     console.log('Product added successfully:', data);
                     alert('Product added successfully!');
+                    window.location.reload();
                 })
                 .catch(error => {
                     console.error('There was a problem with the submission:', error);
@@ -577,64 +567,27 @@
                         `;
                         specList.appendChild(specDiv);
                     });
-
-                    // Add a button to add a new specification
-                    const addSpecBtn = document.createElement('button');
-                    addSpecBtn.classList.add('btn', 'btn-outline-success', 'mt-3');
-                    addSpecBtn.textContent = "Add New Specification";
-                    addSpecBtn.onclick = (function(event){
-                        event.preventDefault();
-                        addSpec();
-                    })
                     specList.appendChild(addSpecBtn);
 
-                    // Show the modal
                     const editProductModal = new bootstrap.Modal(document.getElementById('editProductModal'));
                     editProductModal.show();
                 })
                 .catch(error => console.error('Error fetching product details:', error));
         }
 
-        function addSpec() {
-            const specList = document.getElementById('editSpecList');
-            if (!specList) {
-                console.error('Specification list container not found!');
-                return;
-            }
-
-            const newSpecID = Date.now();
-
-            const newSpecDiv = document.createElement('div');
-            newSpecDiv.id = `spec-${newSpecID}`;
-            newSpecDiv.classList.add('col', 'specificationForm', 'mb-3');
-
-            newSpecDiv.innerHTML = `
-                <input type="text" class="form-control mb-2" name="specifications[new-${newSpecID}][name]" placeholder="Specification Name">
-                <div class="specValues">
-                    <!-- Values will be added here dynamically -->
-                </div>
-                <button type="button" class="btn btn-outline-primary btn-sm mt-2" onclick="addValueToSpec('new-${newSpecID}')">Add New Value</button>
-                <button type="button" class="btn btn-danger btn-sm mt-2" onclick="removeSpec('new-${newSpecID}')">Delete Specification</button>
-            `;
-
-            specList.appendChild(newSpecDiv);
-        }
-
         function addValueToSpec(specID) {
-            // Find the appropriate container for the values
             const specDiv = specID === 'new' 
                 ? document.querySelector('.specificationForm:last-child .specValues') 
                 : document.querySelector(`#spec-${specID} .specValues`);
             
             if (!specDiv) {
                 console.error(`Specification container not found for specID: ${specID}`);
-                return; // Stop if no matching container is found
+                return;
             }
 
-            // Create a new value row
             const newValueDiv = document.createElement('div');
             newValueDiv.classList.add('d-flex', 'align-items-center', 'mb-1');
-            const uniqueID = Date.now(); // Generate a unique ID for new values
+            const uniqueID = Date.now();
             newValueDiv.id = `value-${specID}-${uniqueID}`;
             newValueDiv.innerHTML = `
                 <input type="text" class="form-control me-2" name="specifications[${specID}][values][new-${uniqueID}][name]" placeholder="Value">
@@ -644,7 +597,6 @@
             specDiv.appendChild(newValueDiv);
         }
 
-        // Function to remove a value from a specification
         function removeValue(specID, valueID) {
             const valueDiv = document.getElementById(`value-${specID}-${valueID}`);
             valueDiv.remove();
@@ -724,7 +676,6 @@
                 .then(data => {
                     if (data.success) {
                         alert('Product details updated successfully!');
-                        location.reload();
                     } else {
                         alert('Failed to update product details.');
                         console.error(data.error);

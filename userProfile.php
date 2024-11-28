@@ -50,16 +50,17 @@
                   Categories
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Construction Materials</a></li>
-                  <li><a class="dropdown-item" href="#">Tools</a></li>
-                  <li><a class="dropdown-item" href="#">Paints and Finishing</a></li>
-                  <li><a class="dropdown-item" href="#">Fasteners and Fittings</a></li>
-                  <li><a class="dropdown-item" href="#">Electric Supplies</a></li>
-                  <li><a class="dropdown-item" href="#">Plumbing Supplies</a></li>
-                  <li><a class="dropdown-item" href="#">Safety Equipments</a></li>
-                  <li><a class="dropdown-item" href="#">Gardening Tools</a></li>
-                  <li><a class="dropdown-item" href="#">Woodworking Supplies</a></li>
-                  <li><a class="dropdown-item" href="#">Miscellaneous</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=1">Construction Materials</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=2">Tools</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=3">Paints and Finishing</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=4">Fasteners and Fittings</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=5">Electric Supplies</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=6">Plumbing Supplies</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=7">Safety Equipments</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=8">Gardening Tools</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=9">Woodworking Supplies</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=10">Miscellaneous</a></li>
+                  <li><a class="dropdown-item" href="productList.php?categoryID=All">All</a></li>
                 </ul>
               </li>
             </ul>
@@ -68,8 +69,8 @@
                 <button class="btn" type="submit"><img src="files/icons/search.svg" alt=""></button>
                 <input class="searchInput" type="search" placeholder="Search" aria-label="Search">
               </div>
-              <button class="navIcon"><img src="files/icons/cart.svg" alt="cart"></button>
-              <button class="navIcon"><img src="files/icons/user.svg" alt="cart"></button>
+              <a href="cart.php" class="navIcon"><img src="files/icons/cart.svg" alt="cart"></a>
+              <a href="userProfile.php" class="navIcon"><img src="files/icons/user.svg" alt="user"></a>
             </form>
           </div>
         </div>

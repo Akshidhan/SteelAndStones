@@ -96,16 +96,16 @@
 
 .card{
     box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.199);
-    max-width: 200px;
+    max-width: 250px;
 }
 
 .btn-addToCart{
-    background: rgba(184, 210, 179, 1);
+    background: rgba(184, 210, 179, 1) !important;
     width: 100%;
 }
 
 .btn-addToCart:hover{
-    background: rgba(184, 210, 179, 0.577);
+    background: rgba(184, 210, 179, 0.577) !important;
 }
 
 .extraPic{

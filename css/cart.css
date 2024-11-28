@@ -1,0 +1,40 @@
+
+    body {
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+    }
+
+    .order-list {
+      margin-top: 2rem;
+    }
+
+    .card {
+      border: none;
+    }
+
+    .card img {
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .card-body h5 {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .delivery-info, .order-summary {
+      background: #fff;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .order-summary .list-group-item {
+      border: none;
+      padding: 0.5rem 0;
+    }
+
+    .btn-danger, .btn-success {
+      width: 48%;
+    }
+  

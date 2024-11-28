@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #fff;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.about-section {
+    background-color: #fff;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.about-section h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.about-section h4 {
+    color: #555;
+    margin-top: 30px;
+}
+
+.about-section p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.about-section img {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.button{
+    shape-rendering: crispEdges;
+    border-radius: 15cap;
+}
